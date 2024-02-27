@@ -22,7 +22,7 @@ namespace ApiTests.Tests.UI
             driver = new ChromeDriver(chromeOptions);
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(maxWait));
             driver.Manage().Window.Maximize();
-            driver.Navigate().GoToUrl(ConfigReader.GetConfigValue("webUIUrl"));
+            driver.Navigate().GoToUrl(ConfigReader.GetConfigValue("https://the-internet.herokuapp.com/"));
         }
 
         [TearDown]

@@ -39,5 +39,10 @@ namespace TestProject.Utils
             };
            return JsonSerializer.Deserialize<Pet>(petResponse.Content!, options)!;
         }
+        public static RestResponse PutPetById(Pet pet)
+        {
+            return ApiUtils.SendPutRequest(PostEndpoint, pet);
+        }
+
     }
 }
