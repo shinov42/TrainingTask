@@ -28,6 +28,3 @@ See https://petstore.swagger.io/ for documentation
 | 2              | Click "iFrame" link on the Frames page                          |                                                          |
 | 4              | Input random generated text to the text editor                  | Random text is displayed                                 |
 | 5              | Undo changes with Edit menu                                     | "Your content goes here." text is displayed in the editor|
-
-
-edward
