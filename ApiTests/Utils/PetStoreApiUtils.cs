@@ -19,17 +19,26 @@ namespace TestProject.Utils
         {
             return ApiUtils.SendPostRequest(PostEndpoint, pet);
         }
-        
+
+
         public static bool PostPetIsSuccessful(Pet pet)
         {
+
             //implement a logic of sending a post request with a verification of success
+            DeserializePetResponse(ApiUtils.SendPostRequest(PostEndpoint, pet));
             return false;
         }
-
+        public static bool PutPetIsSuccessful(Pet pet)
+        {
+            //implement a logic of sending a post request with a verification of success
+            DeserializePetResponse(ApiUtils.SendPutRequest(PostEndpoint, pet));
+            return false;
+        }
         public static void DeletePetById(string id)
         {
-            //add delete request for PetStore
+            ApiUtils.SendDeleteRequest(PostEndpoint + id);
         }
+
 
         private static Pet DeserializePetResponse(RestResponse petResponse)
         {
@@ -37,7 +46,12 @@ namespace TestProject.Utils
             {
                 PropertyNameCaseInsensitive = true
             };
-           return JsonSerializer.Deserialize<Pet>(petResponse.Content!, options)!;
+            return JsonSerializer.Deserialize<Pet>(petResponse.Content!, options)!;
         }
+        public static RestResponse PutPetById(Pet pet)
+        {
+            return ApiUtils.SendPutRequest(PostEndpoint, pet);
+        }
+
     }
 }
