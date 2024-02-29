@@ -1,12 +1,13 @@
 ﻿using ApiTests.Tests.UI;
 using OpenQA.Selenium;
+using TestProject.Utils;
 
 namespace TestProject.Tests.UI
 {
     internal class IFrameTests : BaseTest
     {
-        private static readonly By framesBtn = By.XPath(string.Format(preciseTextXpath, "Frames"));
-        private static readonly By iframeBtn = By.XPath(string.Format(preciseTextXpath, "iFrame"));
+        private static readonly By framesBtn = By.XPath(string.Format(XpathPatterns.preciseTextXpath, "Frames"));
+        private static readonly By iframeBtn = By.XPath(string.Format(XpathPatterns.preciseTextXpath, "iFrame"));
         //private static readonly By editBtn = By.XPath(insert locator here);
         //private static readonly By undoBtn = By.XPath(insert locator here);
         private static readonly string randomValue = Guid.NewGuid().ToString();
@@ -15,10 +16,10 @@ namespace TestProject.Tests.UI
         [Test]
         public void IFrameTest()
         {
-            driver.FindElement(framesBtn).Click();
-            driver.FindElement(iframeBtn).Click();
+            Browser.GetDriver().FindElement(framesBtn).Click();
+            Browser.GetDriver().FindElement(iframeBtn).Click();
             //input text to the textfield
-            Assert.True(driver.FindElement(By.XPath(string.Format(preciseTextXpath, initText + randomValue))).Displayed,
+            Assert.True(Browser.GetDriver().FindElement(By.XPath(string.Format(XpathPatterns.preciseTextXpath, initText + randomValue))).Displayed,
                     "Text is not displayed");
 
             //driver.FindElement(editBtn).Click();

@@ -1,18 +1,20 @@
 ﻿using ApiTests.Tests.UI;
 using OpenQA.Selenium;
+using TestProject.Tests.Pages;
+using TestProject.Utils;
 
 namespace TestProject.Tests.UI
 {
     internal class DynamicControlsTests : BaseTest
     {
-        private static readonly By dynamicControl = By.XPath(string.Format(preciseTextXpath, "Dynamic Controls"));
-        private static readonly By enableBtn = By.XPath(string.Format(preciseTextXpath, "Enable"));
+        private static readonly By enableBtn = By.XPath(string.Format(XpathPatterns.preciseTextXpath, "Enable"));
 
         [Test]
         public void DynamicControlsTest()
         {
-            driver.FindElement(dynamicControl).Click();
-            driver.FindElement(enableBtn).Click();
+            MainPage mainPage = new MainPage();
+            mainPage.ClickOnDynamicControl();
+            Browser.GetDriver().FindElement(enableBtn).Click();
             //assert input is enabled
             //input randomly generated text
             //assert input text
