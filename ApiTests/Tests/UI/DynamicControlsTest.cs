@@ -8,28 +8,25 @@ namespace TestProject.Tests.UI
 {
     internal class DynamicControlsTests : BaseTest
     {
-        private static readonly By dynamicControl = By.XPath(string.Format("//a[@href=\"/dynamic_controls\"]", "Dynamic Controls"));
-        private static readonly By enableBtn = By.XPath(string.Format("//button[@onclick=\"swapInput()\"]", "Enable"));
-        private static readonly By inputField = By.Id(string.Format("id=\"input-example\""));
-        string text = "automation class";
+        
 
         [Test]
         public void DynamicControlsTest()
         {
             MainPage mainPage = new MainPage();
             mainPage.ClickOnDynamicControl();
-            Browser.GetDriver().FindElement(enableBtn).Click();
+            DynamicControlsPage dynamicControlsPage = new DynamicControlsPage();
+           
+            dynamicControlsPage.ClickOnEnable();
 
-            Browser.GetDriver().FindElement(dynamicControl).Click();
-            Browser.GetDriver().FindElement(enableBtn).Click();
             //assert input is enabled
-            Assert.True(Browser.GetDriver().FindElement(inputField).Enabled);
+            dynamicControlsPage.assertInputIsEnabled();
+
             //input randomly generated text
-            Browser.GetDriver().FindElement(inputField).Clear();
-            Browser.GetDriver().FindElement(inputField).SendKeys(text);
+            dynamicControlsPage.enterText();
 
             //assert input text
-            Assert.True(Browser.GetDriver().FindElement(inputField).Displayed);
+            dynamicControlsPage.verifyInputText();
 
         }
         /* public void AssertInoutIsEnabled()

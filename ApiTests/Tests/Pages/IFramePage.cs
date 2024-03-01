@@ -37,12 +37,20 @@ namespace TestProject.Tests.Pages
         }
         public void clickUndoBtn()
         {
-            Browser.GetDriver().FindElement(editBtn).Click();
+            
             Browser.GetDriver().FindElement(undoBtn).Click();
-            //assert text is not displayed
+           
+        }
+        public void clickEditBtn()
+        {
+            Browser.GetDriver().FindElement(editBtn).Click();
+        }
+        public void verifyUndo()
+        {  //assert text is not displayed
             var textFieldText = Browser.GetDriver().FindElement(textField).Text;
             Assert.That(textFieldText, Is.EqualTo(initText));
         }
+        
 
     }
 }

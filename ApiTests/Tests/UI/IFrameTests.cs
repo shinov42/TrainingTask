@@ -1,5 +1,6 @@
 ﻿using ApiTests.Tests.UI;
 using OpenQA.Selenium;
+using TestProject.Tests.Pages;
 using TestProject.Utils;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -22,30 +23,19 @@ namespace TestProject.Tests.UI
         [Test]
         public void IFrameTest()
         {
-            Browser.GetDriver().FindElement(framesBtn).Click();
-            Browser.GetDriver().FindElement(iframeBtn).Click();
-
-
-            // driver.FindElement(framesBtn).Click();
-            // driver.FindElement(iframeBtn).Click();
+            MainPage mainPage = new MainPage();
+            IFramePage iframePage= new IFramePage();
+            mainPage.ClickOnFrames();
+            iframePage.ClickOnIframe();
             //input text to the textfield
-            Assert.True(Browser.GetDriver().FindElement(By.XPath(string.Format(XpathPatterns.preciseTextXpath, initText + randomValue))).Displayed,
-                    "Text is not displayed");
-            Browser.GetDriver().FindElement(textField).Clear();
-            Browser.GetDriver().FindElement(textField).SendKeys("This is my content");
-
-            // Assert.True(driver.FindElement(By.XPath(string.Format(initText, initText + randomValue))).Displayed,
-            //      "Text is not displayed");
-
+            iframePage.inputRandomText();
+            iframePage.verifyIfRandomTextIsDisplayed();
             //driver.FindElement(editBtn).Click();
-            Browser.GetDriver().FindElement(editBtn).Click();
+            iframePage.clickEditBtn();
             //driver.FindElement(undoBtn).Click();
-            Browser.GetDriver().FindElement(undoBtn).Click();
+            iframePage.clickEditBtn();
             //assert text is not displayed
-            var textFieldText = Browser.GetDriver().FindElement(textField).Text;
-
-            // Assert.True((textFieldText), "Text is not displayed");
-            Assert.That(textFieldText, Is.EqualTo(initText));
+            iframePage.verifyUndo();
 
         }
     }
