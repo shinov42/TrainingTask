@@ -8,8 +8,6 @@ namespace TestProject.Tests.UI
 {
     internal class DynamicControlsTests : BaseTest
     {
-        
-
         [Test]
         public void DynamicControlsTest()
         {
@@ -27,24 +25,7 @@ namespace TestProject.Tests.UI
 
             //assert input text
             dynamicControlsPage.verifyInputText();
-
         }
-        /* public void AssertInoutIsEnabled()
-         {
-
-             Assert.IsTrue(driver.FindElement(inputField).Enabled);
-
-         }
-         public void enterText(string text)
-         {
-
-             driver.FindElement(inputField).Clear();
-             driver.FindElement(inputField).SendKeys(text);
-
-             Assert.That(text, Is.EqualTo("automationClass"));
-
-         }
-        */
     }
 
 }
