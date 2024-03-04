@@ -2,23 +2,30 @@
 using OpenQA.Selenium;
 using TestProject.Tests.Pages;
 using TestProject.Utils;
+using Assert = NUnit.Framework.Assert;
 
 namespace TestProject.Tests.UI
 {
     internal class DynamicControlsTests : BaseTest
     {
-        private static readonly By enableBtn = By.XPath(string.Format(XpathPatterns.preciseTextXpath, "Enable"));
-
         [Test]
         public void DynamicControlsTest()
         {
             MainPage mainPage = new MainPage();
             mainPage.ClickOnDynamicControl();
-            Browser.GetDriver().FindElement(enableBtn).Click();
+            DynamicControlsPage dynamicControlsPage = new DynamicControlsPage();
+           
+            dynamicControlsPage.ClickOnEnable();
+
             //assert input is enabled
+            dynamicControlsPage.assertInputIsEnabled();
+
             //input randomly generated text
+            dynamicControlsPage.enterText();
+
             //assert input text
+            dynamicControlsPage.verifyInputText();
         }
     }
-    
+
 }

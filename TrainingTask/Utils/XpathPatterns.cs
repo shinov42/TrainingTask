@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestProject.Utils
+namespace TrainingTask.Utils
 {
     internal class XpathPatterns
     {

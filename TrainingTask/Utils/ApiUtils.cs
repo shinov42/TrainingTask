@@ -1,6 +1,6 @@
 ﻿using RestSharp;
 
-namespace TestProject.Utils
+namespace TrainingTask.Utils
 {
     internal class ApiUtils
     {
