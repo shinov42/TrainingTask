@@ -15,6 +15,7 @@ namespace TestProject.Tests.UI
             IFramePage iframePage= new IFramePage();
             mainPage.ClickOnFrames();
             iframePage.ClickOnIframe();
+            
             //input text to the textfield
             iframePage.inputRandomText();
             iframePage.verifyIfRandomTextIsDisplayed();

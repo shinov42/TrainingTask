@@ -1,13 +1,8 @@
-﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Internal;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TestProject.Utils;
+﻿using NUnit.Framework;
+using OpenQA.Selenium;
+using TrainingTask.Utils;
 
-namespace TestProject.Tests.Pages
+namespace TrainingTask.Tests.Pages
 {
     internal class DynamicControlsPage
     {
