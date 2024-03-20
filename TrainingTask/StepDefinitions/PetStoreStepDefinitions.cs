@@ -6,12 +6,23 @@ using System.Text;
 using System.Threading.Tasks;
 using TrainingTask.Utils;
 using TrainingTask.Models;
+using OpenQA.Selenium;
+using BoDi;
 
-namespace TrainingTask.Tests.Pages.StepDefinitions
+namespace TrainingTask.StepDefinitions
 {
     [Binding]
     public class PetStoreStepDefinitions
     {
+        IObjectContainer objectcontainer;
+        IWebDriver driver;
+
+
+        public PetStoreStepDefinitions(IWebDriver driver, IObjectContainer objectcontainer) 
+        {
+            this.objectcontainer = objectcontainer;
+            this.driver = driver;
+        }
         [Given(@"I create a pet with get request")]
         public void GivenICreateAPetWithGetRequest()
         {
@@ -36,28 +47,33 @@ namespace TrainingTask.Tests.Pages.StepDefinitions
                 Is.EqualTo("Mister Pickles"));
         }
         [When(@"I update a pet from previous step and change the name to a new one")]
+
         public void WhenIUpdateAPetFromPreviousStepAndChangeTheNameToANewOne()
         {
             PetStoreApiUtils.PutPetIsSuccessful(
                  new Pet(
                       ConfigReader.GetNumericalTestDataValue("petId"),
                      ConfigReader.GetTestDataValue("newPetName"),
-                     ConfigReader.GetTestDataValue("asleep")));
+                     ConfigReader.GetTestDataValue("petStatus")));
         }
-
-        [Then(@"Request was successful & the name is updated")]
-        public void ThenRequestWasSuccessfulTheNameIsUpdated()
+        [Then(@"I check '([^']*)' and Response Status")]
+        public void ThenICheckAndResponseStatus(string putRequest)
         {
-            Assert.That(PetStoreApiUtils.GetPetById(
-               ConfigReader.GetNumericalTestDataValue("petId")).Name,
-               Is.EqualTo(ConfigReader.GetTestDataValue("newPetName")),
-               "Pet name is not as expected");
-        }
-
-        [Then(@"I delete a pet from a pet store")]
-        public void ThenIDeleteAPetFromAPetStore()
-        {
-            PetStoreApiUtils.DeletePetById(ConfigReader.GetTestDataValue("petId"));
+            if (putRequest == "putRequest")
+            {
+                PetStoreApiUtils.PutPetIsSuccessful(
+                 new Pet(
+                      ConfigReader.GetNumericalTestDataValue("petId"),
+                     ConfigReader.GetTestDataValue("newPetName"),
+                     ConfigReader.GetTestDataValue("petStatus")));
+            }
+            else if (putRequest == "responseNewPetName")
+            {
+                Assert.That(PetStoreApiUtils.GetPetById(
+              ConfigReader.GetNumericalTestDataValue("petId")).Name,
+              Is.EqualTo("Daisy"),
+              "Pet name is not as expected");
+            }
         }
 
     }

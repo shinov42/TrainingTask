@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using FluentAssertions.Execution;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using System;
@@ -9,23 +10,22 @@ using System.Threading.Tasks;
 
 namespace TrainingTask.Utils
 {
-    internal class Browser
+    internal class Browser 
     {
         private static WebDriver driver = null;
         private static WebDriverWait wait = null;
         private static readonly long maxWait = ConfigReader.GetConfigTestDataValue("maxWait");
 
+        public Browser(WebDriver webDriver) 
+        {
+            driver = webDriver;
+        }
+
         public static WebDriver GetDriver()
         {
-            if (driver is null)
-            {
-                var chromeOptions = new ChromeOptions();
-                chromeOptions.AddUserProfilePreference("disable-popup-blocking", "true");
-                driver = new ChromeDriver(chromeOptions);
-                wait = new WebDriverWait(driver, TimeSpan.FromSeconds(maxWait));
-                driver.Manage().Window.Maximize();
-            }
+           
             return driver;
         }
+        
     }
 }

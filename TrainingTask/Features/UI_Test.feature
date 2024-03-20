@@ -1,11 +1,11 @@
 ﻿Feature: UI test
 
 Automation training with Welcome to the-internet application
-Background: Launchung the application
-Given I launch the app url
+
 
 @TestCaseId_01
 Scenario: Dynamic Controls
+Given I launch the app url
 When I click Dynamic Controls link on the Main page
 And  I Click Enable button
 Then Verify that the Enable/disable input field is enabled

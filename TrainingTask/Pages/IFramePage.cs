@@ -7,55 +7,58 @@ using System.Text;
 using System.Threading.Tasks;
 using TrainingTask.Utils;
 
-namespace TrainingTask.Tests.Pages
+namespace TrainingTask.Pages
 {
     internal class IFramePage
     {
+        IWebDriver driver;
+        private static readonly long maxWait = ConfigReader.GetConfigTestDataValue("maxWait");
         private static readonly By dynamicControl = By.XPath(string.Format(XpathPatterns.preciseTextXpath, "Dynamic Controls"));
-        private static readonly By iFrame = By.XPath(string.Format(XpathPatterns.iframeBtn1, "iFrame btton"));
-        private static readonly By undoBtn = By.XPath(string.Format(XpathPatterns.undoBtn1, "textField"));
-        private static readonly By editBtn = By.XPath(string.Format(XpathPatterns.editBtn1, "editBtn"));
-        private static readonly By textField = By.XPath(string.Format(XpathPatterns.textField1, "textField"));
+        private static readonly By iFrame = By.XPath(string.Format("//a[@href='/iframe']", "iFrame btton"));
+        private static readonly By undoBtn = By.XPath(string.Format("//div[@class='tox-collection__item-label'])[1]", "textField"));
+        private static readonly By editBtn = By.XPath(string.Format("//div[@class='tox-collection__item-label'])[1]", "editBtn"));
+        private static readonly By textField = By.XPath(string.Format("id='tinymce'", "textField"));
         private static readonly string randomValue = Guid.NewGuid().ToString();
         private static readonly string initText = "Your content goes here.";
 
+        public IFramePage(IWebDriver driver)
+        {
+
+            this.driver = driver;
+        }
         public void ClickOnIframe()
         {
-            Browser.GetDriver().FindElement(iFrame).Click();
-            Thread.Sleep(5000);
+           driver.FindElement(iFrame).Click();
+           
         }
 
         public void inputRandomText()
         {
-            Browser.GetDriver().FindElement(textField).Clear();
-            Browser.GetDriver().FindElement(textField).SendKeys(initText + randomValue);
+           driver.FindElement(textField).Clear();
+           driver.FindElement(textField).SendKeys(initText + randomValue);
 
         }
-        public void verifyIfRandomTextIsDisplayed()
+        public bool verifyIfRandomTextIsDisplayed()
         {
-            Assert.True(Browser.GetDriver().FindElement(By.XPath(string.Format(XpathPatterns.textField1, initText + randomValue))).Displayed,
+            Assert.True(driver.FindElement(By.XPath(string.Format("id='tinymce'", initText + randomValue))).Displayed,
                     "Text is not displayed");
+            return false;
         }
         public void clickUndoBtn()
         {
             
-            Browser.GetDriver().FindElement(undoBtn).Click();
+            driver.FindElement(undoBtn).Click();
            
         }
         public void clickEditBtn()
         {
-            Browser.GetDriver().FindElement(editBtn).Click();
+           driver.FindElement(editBtn).Click();
         }
-        public void verifyUndo()
+        public bool verifyUndo()
         {  //assert text is not displayed
             var textFieldText = Browser.GetDriver().FindElement(textField).Text;
             Assert.That(textFieldText, Is.EqualTo(initText));
-        }
-
-        public void clickNewDocument()
-        {
-            Browser.GetDriver().FindElement(By.XPath(string.Format(XpathPatterns.fileBtn))).Click();
-            Browser.GetDriver().FindElement(By.XPath(string.Format(XpathPatterns.newPage))).Click();
+            return false;
         }
     }
 }

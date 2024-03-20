@@ -1,24 +1,37 @@
-﻿using System;
+﻿using BoDi;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TrainingTask.Tests.Pages;
+using TrainingTask.Pages;
+using TrainingTask.Utils;
 
-namespace TrainingTask.Tests.UI.StepDedinitions
+namespace TrainingTask.StepDefinitions
 {
     [Binding]
 
     public class IFrameStepDefinitions
-    {
-        MainPage mainPage = new MainPage();
-        IFramePage iframePage = new IFramePage();
+    {   IWebDriver driver;
+        IObjectContainer objectContainer;
+        MainPage mainPage;
+        IFramePage iframePage;
+
+        public IFrameStepDefinitions(IWebDriver driver, IObjectContainer objectContainer)
+        {
+            this.driver = driver;
+            this.objectContainer = objectContainer;
+            mainPage=objectContainer.Resolve<MainPage>();
+            iframePage=objectContainer.Resolve<IFramePage>();
+
+        }
+
         [When(@"I click Frames link on the Main page")]
         public void WhenIClickFramesLinkOnTheMainPage()
         {
-            
             mainPage.ClickOnFrames();
-          
         }
 
         [When(@"I click iFrame link on the Frames page")]

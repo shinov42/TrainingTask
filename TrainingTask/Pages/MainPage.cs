@@ -6,20 +6,25 @@ using System.Text;
 using System.Threading.Tasks;
 using TrainingTask.Utils;
 
-namespace TrainingTask.Tests.Pages
+namespace TrainingTask.Pages
 {
     internal class MainPage
     {
-        private static readonly By dynamicControl0 = By.XPath(string.Format(XpathPatterns.preciseTextXpath, "Dynamic Controls"));
-        private static readonly By dynamicControl = By.XPath(string.Format(XpathPatterns.dynamicControl, "Dynamic Controls"));
-        private static readonly By frames = By.XPath(string.Format(XpathPatterns.framesBtn1, "frames button"));
+       IWebDriver driver;
+        private static readonly By dynamicControl0 = By.XPath(string.Format("\"//a[@href='/dynamic_controls']\"", "Dynamic Controls"));
+        private static readonly By dynamicControl = By.XPath(string.Format("//a[@href='/dynamic_controls']", "Dynamic Controls"));
+        private static readonly By frames = By.XPath(string.Format("//*[@href='/frames']", "frames button"));
+        public MainPage(IWebDriver driver)
+        {
+            this.driver = driver;
+        }
         public void ClickOnDynamicControl()
         {
-            Browser.GetDriver().FindElement(dynamicControl).Click();
+           driver.FindElement(dynamicControl).Click();
         }
         public void ClickOnFrames()
         {
-            Browser.GetDriver().FindElement(frames).Click();
+           driver.FindElement(frames).Click();
         }
 
     }

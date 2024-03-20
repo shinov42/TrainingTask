@@ -1,25 +1,40 @@
-﻿using System;
+﻿
+using BoDi;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TrainingTask.Tests.Pages;
+using TechTalk.SpecFlow;
+using TrainingTask.Pages;
 using TrainingTask.Utils;
 
-namespace TrainingTask.Tests.UI.StepDedinitions
+namespace TrainingTask.StepDefinitions
 {
     [Binding]
-    public  class DynamicControlsStepDefinitions
+    public class DynamicControlsStepDefinitions
     {
-        MainPage mainPage = new MainPage();
-        DynamicControlsPage dynamicControlsPage = new DynamicControlsPage();
-
+        IWebDriver driver;
+        MainPage mainPage;
+        DynamicControlsPage dynamicControlsPage;
+        IObjectContainer objectcontainer;
+        ScenarioContext scenarioContext;
+        public DynamicControlsStepDefinitions(IWebDriver driver, ScenarioContext scenarioContext, IObjectContainer objectcontainer)
+        {
+            this.driver = driver;
+            this.scenarioContext = scenarioContext;
+            this.objectcontainer = objectcontainer;
+            mainPage=objectcontainer.Resolve<MainPage>();
+            dynamicControlsPage=objectcontainer.Resolve<DynamicControlsPage>();
+        }
         [Given(@"I launch the app url")]
         public void GivenILaunchTheAppUrl()
         {
-            Browser.GetDriver().Navigate().GoToUrl(ConfigReader.GetConfigValue("webUIUrl"));
+            Thread.Sleep(5000);
         }
-
         [When(@"I click Dynamic Controls link on the Main page")]
         public void WhenIClickDynamicControlsLinkOnTheMainPage()
         {
