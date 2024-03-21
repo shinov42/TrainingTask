@@ -39,7 +39,7 @@ namespace TrainingTask.Pages
         public bool assertInputIsEnabled()
         {
             Thread.Sleep(5000);
-            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(maxWait));
+            //wait = new WebDriverWait(driver, TimeSpan.FromSeconds(maxWait));
             var enable_diabledBtnMsg = driver.FindElement(enableBtn).Text;
             Assert.That(enable_diabledBtnMsg, Is.EqualTo("Disable"));
             return false;
