@@ -1,8 +1,8 @@
-﻿using TestProject.Models;
+﻿using TrainingTask.Models;
 using RestSharp;
 using System.Text.Json;
 
-namespace TestProject.Utils
+namespace TrainingTask.Utils
 {
     internal class PetStoreApiUtils
     {

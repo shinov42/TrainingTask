@@ -1,6 +1,6 @@
 {
   "baseRequestUrl": "https://petstore.swagger.io/v2/",
   "webUIUrl": "https://the-internet.herokuapp.com/",
-  "maxWait": 1000,
-  
+  "maxWait": 10,
+  "BrowserType": "Chrome"
 }
