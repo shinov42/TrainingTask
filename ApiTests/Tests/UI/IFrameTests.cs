@@ -1,31 +1,29 @@
 ﻿using ApiTests.Tests.UI;
-using OpenQA.Selenium;
-using TestProject.Utils;
+using TestProject.Tests.Pages;
+
 
 namespace TestProject.Tests.UI
 {
     internal class IFrameTests : BaseTest
     {
-        private static readonly By framesBtn = By.XPath(string.Format(XpathPatterns.preciseTextXpath, "Frames"));
-        private static readonly By iframeBtn = By.XPath(string.Format(XpathPatterns.preciseTextXpath, "iFrame"));
-        //private static readonly By editBtn = By.XPath(insert locator here);
-        //private static readonly By undoBtn = By.XPath(insert locator here);
-        private static readonly string randomValue = Guid.NewGuid().ToString();
-        private static readonly string initText = "Your content goes here.";
+        readonly MainPage mainPage = new MainPage();
+        readonly FramesPage framesPage = new FramesPage();
+        readonly IframePage iframePage = new IframePage();
 
         [Test]
         public void IFrameTest()
         {
-            Browser.GetDriver().FindElement(framesBtn).Click();
-            Browser.GetDriver().FindElement(iframeBtn).Click();
-            //input text to the textfield
-            Assert.True(Browser.GetDriver().FindElement(By.XPath(string.Format(XpathPatterns.preciseTextXpath, initText + randomValue))).Displayed,
-                    "Text is not displayed");
-
-            //driver.FindElement(editBtn).Click();
-            //driver.FindElement(undoBtn).Click();
-
-            //assert text is not displayed
+            mainPage.ClickOnFramesButton();
+            framesPage.ClickOnIframeButton();
+            iframePage.SwitchToIframe();
+            iframePage.SendRandomTextToTextField();
+            Assert.That(iframePage.GetPrintedTextBeforeClear(), Is.True, "Printed text is not expected");
+            iframePage.SwitchFromIframe();
+            iframePage.ClickOnEditButtonInIframe();
+            iframePage.ClickOnUndoButton();
+            iframePage.SwitchToIframe();
+            Assert.That(iframePage.GetPrintedTextAfterClearTextField(), Is.EqualTo(iframePage.GetInitText()), 
+                $"Printed text is not initial value '{iframePage.GetInitText()}'");
         }
     }
 }

@@ -1,5 +1,8 @@
+using RestSharp;
+using System.Net;
 using TestProject.Models;
 using TestProject.Utils;
+
 
 namespace TestProject.Tests.API
 {
@@ -8,37 +11,48 @@ namespace TestProject.Tests.API
         [SetUp]
         public void Setup()
         {
-            //move test data creation here
-        }
-
-        [Test]
-        public void PetTest()
-        {
             //create a pet using post request
+            //move test data creation here
             PetStoreApiUtils.PostPet(
                 new Pet(
                     ConfigReader.GetNumericalTestDataValue("petId"),
                     ConfigReader.GetTestDataValue("petName"),
                     ConfigReader.GetTestDataValue("petStatus")));
+        }
 
+        [Test]
+        public void PetTest()
+        {
             //validate that the name of the pet is as you passed in a previous step
-
-            //update pet and change the name to a new one and validate that the request was successful
-
-            //validate that the name of the pet is updated to a new one
             Assert.That(PetStoreApiUtils.GetPetById(
                 ConfigReader.GetNumericalTestDataValue("petId")).Name,
-                Is.EqualTo(ConfigReader.GetTestDataValue("newPetName")),
-                "Pet name is not as expected");
+                Is.EqualTo(ConfigReader.GetTestDataValue("petName")), "Pet name is not as expected");
 
-            //delete a pet from the petstore
-            PetStoreApiUtils.DeletePetById(ConfigReader.GetTestDataValue("petId"));
+            //update pet and change the name to a new one and validate that the request was successful
+            RestResponse updateResponse = PetStoreApiUtils.PutPet(
+                new Pet(
+                    ConfigReader.GetNumericalTestDataValue("petId"),
+                    ConfigReader.GetTestDataValue("newPetName"),
+                    ConfigReader.GetTestDataValue("petStatus")));
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(updateResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK), "Pet update request was not successful");
+                //validate that the name of the pet is updated to a new one
+                Assert.That(PetStoreApiUtils.GetPetById(
+                    ConfigReader.GetNumericalTestDataValue("petId")).Name,
+                    Is.EqualTo(ConfigReader.GetTestDataValue("newPetName")),
+                    "Updated pet name is not as expected");
+            }
+           );
         }
 
         [TearDown]
         public void TearDown()
         {
+            //delete a pet from the petstore
             //Created pet should be deleted after the test
+            PetStoreApiUtils.DeletePetById(ConfigReader.GetTestDataValue("petId"));
         }
     }
 }

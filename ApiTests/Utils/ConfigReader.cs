@@ -3,7 +3,7 @@ using Newtonsoft.Json.Linq;
 
 namespace TestProject.Utils
 {
-    internal class ConfigReader
+    static class ConfigReader
     {
         public static string GetTestDataValue(string key)
         {

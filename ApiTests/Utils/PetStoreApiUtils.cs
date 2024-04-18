@@ -4,32 +4,32 @@ using System.Text.Json;
 
 namespace TestProject.Utils
 {
-    internal class PetStoreApiUtils
+    static class PetStoreApiUtils
     {
-        private static readonly string GetEndpoint = "pet/";
-        private static readonly string PostEndpoint = "pet/";
+        private static readonly string PetEndpoint = "pet/";
 
         public static Pet GetPetById(long id)
         {
             return DeserializePetResponse(
-                ApiUtils.SendGetRequest(GetEndpoint + id));
+                ApiUtils.SendGetRequest(PetEndpoint + id));
         }
 
         public static RestResponse PostPet(Pet pet)
         {
-            return ApiUtils.SendPostRequest(PostEndpoint, pet);
-        }
-        
-        public static bool PostPetIsSuccessful(Pet pet)
-        {
-            //implement a logic of sending a post request with a verification of success
-            return false;
+            return ApiUtils.SendPostRequest(PetEndpoint, pet);
         }
 
-        public static void DeletePetById(string id)
+        public static RestResponse PutPet(Pet pet)
         {
-            //add delete request for PetStore
+            return ApiUtils.SendPostRequest(PetEndpoint, pet);
         }
+
+        public static bool DeletePetById(string id)
+        {
+            RestResponse response = ApiUtils.SendDeleteRequest(PetEndpoint + id);
+            return response.StatusCode == System.Net.HttpStatusCode.OK;
+        }
+
 
         private static Pet DeserializePetResponse(RestResponse petResponse)
         {
