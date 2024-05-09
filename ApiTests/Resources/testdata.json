@@ -2,5 +2,6 @@
   "petId": 123456,
   "petName": "Mister Pickles",
   "petStatus": "asleep",
-  "newPetName": "Daisy"
+  "newPetName": "Daisy",
+  "initText": "Your content goes here."
 }

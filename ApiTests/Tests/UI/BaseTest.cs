@@ -1,21 +1,32 @@
-﻿using TestProject.Utils;
+﻿using OpenQA.Selenium;
+using TestProject.Utils;
 
 namespace ApiTests.Tests.UI
 {
-    internal class BaseTest
+    public class BaseTest
     {
+        public void ClickOnElement(string elementName)
+        {
+            By elementLocator = By.XPath(string.Format(XpathPatterns.preciseTextXpath, elementName));
+            Browser.GetDriver().FindElement(elementLocator).Click();
+        }
+
         protected static readonly string partialTextXpath = "//*[contains(text(),'{0}')]";
 
         [SetUp]
-        public void Setup()
+        public static void Setup()
         {
-            Browser.GetDriver().Navigate().GoToUrl(ConfigReader.GetConfigValue("webUIUrl"));
+            try
+            {
+                Browser.GetDriver().Navigate().GoToUrl(ConfigReader.GetConfigValue("webUIUrl"));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error encountered during page navigation: " + e.Message);
+            }
         }
 
         [TearDown]
-        public void TearDown()
-        {
-            Browser.GetDriver().Quit();
-        }
+        public void TearDown() => Browser.GetDriver().Quit();
     }
 }

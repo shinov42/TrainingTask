@@ -1,15 +1,10 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TestProject.Utils
 {
-    internal class Browser
+    public class Browser
     {
         private static WebDriver driver = null;
         private static WebDriverWait wait = null;
