@@ -23,12 +23,24 @@ namespace TestProject.Utils
         public static bool PostPetIsSuccessful(Pet pet)
         {
             //implement a logic of sending a post request with a verification of success
+            var req = ApiUtils.SendPostRequest(PostEndpoint, pet);
+            if (req.IsSuccessful)
+            {
+                return true;
+            }
+
             return false;
+        }
+
+        public static RestResponse UpdatePet(Pet pet)
+        {
+            return ApiUtils.SendPutRequest(PostEndpoint, pet);
         }
 
         public static void DeletePetById(string id)
         {
             //add delete request for PetStore
+            ApiUtils.SendDeleteRequest(PostEndpoint+id);
         }
 
         private static Pet DeserializePetResponse(RestResponse petResponse)
